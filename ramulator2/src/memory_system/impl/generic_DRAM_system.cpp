@@ -23,6 +23,7 @@ protected:
   std::vector<IDRAMController *> m_controllers;
   std::deque<Request> m_read_in_order_q;
   std::deque<Request> m_receive_merge_q;
+  
 
 public:
   int s_num_read_requests = 0;
@@ -67,6 +68,9 @@ public:
   bool send(Request req) override {
     m_addr_mapper->apply(req);
     int channel_id = req.addr_vec[0];
+
+    // check rd write queue, 
+
     // To debug: For test Case 1 @ core 36 to 1 channel, the core_id 36 is never served, never a success
     // Since core_id 36 is never served, the simulation would never completes.
     // 1. Why other cores still keep simulating even if the core_id 36 is never served?
@@ -107,6 +111,8 @@ public:
   void tick() override {
     m_clk++;
     m_dram->tick();
+
+
     for (auto controller : m_controllers) {
       controller->tick(); // Tick the controller
     }
@@ -146,6 +152,7 @@ private:
 
         // TO-DO Callback to the frontend if it has a callback to do
         if (req_to_callback.callback != nullptr) {
+          // std:: cout << "Callback to the frontend" << std::endl;
           req_to_callback.callback(req_to_callback);
         }
       } else {

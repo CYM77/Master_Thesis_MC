@@ -54,6 +54,8 @@ namespace Ramulator
       m_current_stall_cycles--;
       return;
     }
+    //20250513ym
+    m_memory_system->issue();
 
     // If the core finish executing all the traces, it no longer needs to send request
     if(this->is_finished() || (m_curr_trace_idx >= m_num_expected_traces) || (m_curr_trace_idx >= m_trace_length))
@@ -81,6 +83,8 @@ namespace Ramulator
     // addr, type, callback
     Request request(t.addr, t.is_write ? Request::Type::Write : Request::Type::Read, m_core_id,m_callback);
 
+    
+    
     bool request_sent = m_memory_system->send(request);
 
     if (request_sent)
@@ -113,7 +117,7 @@ namespace Ramulator
   void LoadStoreStallCore::receive(Request &req)
   {
     // print Receive the request at clk cycle addr and core id
-    // if(m_is_debug)
+    if(m_is_debug)
       // std::cerr << req.type_id <<"request received at " << m_clk << " clk cycle addr " << req.addr << " and core id " << m_core_id << std::endl;
 
     // Write the request to the returned trace file in the following format

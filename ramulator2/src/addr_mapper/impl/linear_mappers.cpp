@@ -70,6 +70,25 @@ class ChRaBaRoCo final : public LinearMapperBase, public Implementation {
       }
     }
 };
+//write a new one for another remapping
+// class ChRaBaRoCo final : public LinearMapperBase, public Implementation {
+//   RAMULATOR_REGISTER_IMPLEMENTATION(IAddrMapper, ChRaBaRoCo, "ChRaBaRoCo", "Applies a trival mapping to the address.");
+
+//   public:
+//     void init() override { };
+
+//     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override {
+//       LinearMapperBase::setup(frontend, memory_system);
+//     }
+
+//     void apply(Request& req) override {
+//       req.addr_vec.resize(m_num_levels, -1);
+//       Addr_t addr = req.addr >> m_tx_offset;
+//       for (int i = m_addr_bits.size() - 1; i >= 0; i--) {
+//         req.addr_vec[i] = slice_lower_bits(addr, m_addr_bits[i]);
+//       }
+//     }
+// };
 
 // This definitely maximize throughputs
 class RoBaRaCoCh final : public LinearMapperBase, public Implementation {

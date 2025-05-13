@@ -436,6 +436,9 @@ namespace Ramulator
             // m_logger->debug("Request served at Clk={}, Addr={}, Type={}", m_clk,
             //                 req.addr, req.type_id);
             m_memory_system->ordered_receive(req);
+            // std::cout << "mem_sys receive Request served at Clk=" << m_clk
+            //           << ", Addr=" << req.addr << ", Type=" << req.type_id
+            //           << std::endl;
           }
           // Finally, remove this request from the pending queue
           pending.pop_front();

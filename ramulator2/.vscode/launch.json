@@ -6,7 +6,7 @@
             "request": "launch",
             "program": "${workspaceFolder}/build/ramulator2",
             // "args": ["-f","${workspaceFolder}/config_files/test/testing_pattern_config.yaml"],
-            "args": ["-f","${workspaceFolder}/Trace_Verification_RTL_C++/testing_latency_verification_all_row_buffer_conflicts.yaml"],
+            "args": ["-f","${workspaceFolder}/Trace_Verification_RTL_C++/testing_latency_verification_Read_Write_Interleaving.yaml"],
             "stopAtEntry": true,
             "cwd": "${workspaceFolder}/build",
             "environment": [],

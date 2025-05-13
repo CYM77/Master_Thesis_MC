@@ -31,6 +31,7 @@ struct Request {
 
   Clk_t arrive = -1;   // Clock cycle when the request arrive at the memory controller
   Clk_t depart = -1;   // Clock cycle when the request depart the memory controller
+  Clk_t arrive_global_controller = -1; // Clock cycle when the request arrive at the global controller
 
   Clk_t request_issue_delay = -1;
 
@@ -74,7 +75,57 @@ struct ReqBuffer {
   void remove(iterator it) {
     buffer.erase(it);
   }
+
+
+  //jimmy add in 20250501
+  // --- Front / Back 元素操作 ---
+
+  // ✅ 回傳 front 的參考（可修改）
+  Request& front() {
+    return buffer.front();
+  }
+
+  const Request& front() const {
+    return buffer.front();
+  }
+
+  // ✅ 回傳 back 的參考（可修改）
+  Request& back() {
+    return buffer.back();
+  }
+
+  const Request& back() const {
+    return buffer.back();
+  }
+
+  // ✅ 若想回傳複製值（by value）
+  Request get_front() const {
+    return buffer.front();
+  }
+
+  Request get_back() const {
+    return buffer.back();
+  }
+
+  // ✅ 移除 front
+  void pop_front() {
+    if (!buffer.empty()) {
+      buffer.pop_front();
+    }
+  }
+
+  // ✅ 移除 back（若需要）
+  void pop_back() {
+    if (!buffer.empty()) {
+      buffer.pop_back();
+    }
+  }
 };
+
+
+
+
+
 
 }        // namespace Ramulator
 

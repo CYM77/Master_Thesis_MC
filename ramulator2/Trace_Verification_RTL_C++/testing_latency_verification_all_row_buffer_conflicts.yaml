@@ -16,6 +16,11 @@ MemorySystem:
   impl: GenericDRAM
   clock_ratio: 3
 
+  # Schduler: 
+  #   impl: FCFS
+  # AddrMapper:
+  #   impl: RoBaRaCoCh
+
   DRAM:
     impl: DDR4
 

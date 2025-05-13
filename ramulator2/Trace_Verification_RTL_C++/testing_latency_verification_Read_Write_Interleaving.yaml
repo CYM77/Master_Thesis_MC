@@ -1,7 +1,7 @@
 Frontend:
   impl: LoadStoreStallTrace
   clock_ratio: 3
-  num_expected_insts: 32768
+  num_expected_insts: 4194304
   returned_trace_path: ../returned_trace/
   bandwidth_sample_time_interval: 100
   debug: true
@@ -10,10 +10,12 @@ Frontend:
 
   Translation:
     impl: NoTranslation
-    max_addr: 33554432
+    max_addr: 536870784
 
 MemorySystem:
-  impl: GenericDRAM
+  # impl: GenericDRAM
+  impl: Global_Controller 
+  # impl: DummyMemorySystem
   clock_ratio: 3
 
   DRAM:
@@ -41,7 +43,7 @@ MemorySystem:
       row: 65536
       column: 16    
       density: 1024 #Mb
-      channel: 1
+      channel: 4
       rank: 1
     timing:
       preset: DDR4_3DDRAM_1024
@@ -52,7 +54,8 @@ MemorySystem:
 
 
   Controller:
-    impl: GenericController
+    # impl: GenericController
+    impl : BankLevelController
     # The bandiwdth calculation is base on the return trace in the memory system order queue
     sample_time: 500
     bandwidth_record_file: ../cmd_records/bandwidth_record_ideal.txt

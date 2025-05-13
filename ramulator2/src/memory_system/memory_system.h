@@ -40,6 +40,7 @@ class IMemorySystem : public TopLevel<IMemorySystem> {
       emitter << YAML::EndMap;
       std::cout << emitter.c_str() << std::endl;
     };
+    
 
     /**
      * @brief         Tries to send the request to the memory system
@@ -80,6 +81,9 @@ class IMemorySystem : public TopLevel<IMemorySystem> {
     // virtual const SpecDef& get_supported_requests() = 0;
 
     virtual float get_tCK() { return -1.0f; };
+
+    //20250513ym
+    virtual void issue(){};
 };
 
 }        // namespace Ramulator
