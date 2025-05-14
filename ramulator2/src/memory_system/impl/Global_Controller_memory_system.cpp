@@ -31,6 +31,9 @@ protected:
   ReqBuffer write_request_buffer;
   int write_flush_threshold; // Set the threshold for write flush
   bool write_flush_flag; // Set the flag for write flush
+
+  int read_inorder_threshold = 0;
+  int read_inorder_cnt = 0;
   
 public:
   int s_num_read_requests = 0;
@@ -44,6 +47,10 @@ public:
 
 public:
   void init() override {
+    read_inorder_cnt = 0;
+    read_inorder_threshold = 16;
+
+
     //set R/W queue size
     read_request_buffer.set_queue_size(8 - 1);
     write_request_buffer.set_queue_size(8 - 1);
@@ -220,6 +227,9 @@ public:
     // else{
     //   std::cout << "write flush = 0" << std::endl;
     // }
+    if(read_inorder_cnt == read_inorder_threshold){
+      return;
+    }
 
     //determine read or write request buffer be issued
     if (write_flush_flag) {
@@ -275,6 +285,9 @@ public:
         //                 m_clk, req.addr, req.type_id);
         m_read_in_order_q.push_back(*req_candidate);
         read_request_buffer.buffer.pop_front();
+
+        read_inorder_cnt++;
+
         break;
       }
       case Request::Type::Write: {
@@ -458,6 +471,9 @@ private:
           //             << ", Addr=" << req_to_callback.addr << ", Type=" << req_to_callback.type_id
           //             << std::endl;
           req_to_callback.callback(req_to_callback);
+
+          read_inorder_cnt--;
+
           break;
         }
       } else {
